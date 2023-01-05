@@ -27,6 +27,9 @@ public class P08_DropdownSendKeysKullanimli extends TestBase {
         driver.findElement(By.xpath("//*[@id='searchDropdownBox']")).sendKeys("Baby", Keys.TAB,"Milk",Keys.ENTER);
         Thread.sleep(3000);
 
+        /*
+            Erol hoca yukaridaki ornekte dropdown'daki 3 asamayi kullanmadan obje olusturmadan kisa yol kullanimini gosterdi.
+         */
 
 
 
