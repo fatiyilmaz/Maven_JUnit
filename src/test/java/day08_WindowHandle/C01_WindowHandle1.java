@@ -1,4 +1,4 @@
-package day08_Window;
+package day08_WindowHandle;
 
 import org.junit.Assert;
 import org.junit.Test;
