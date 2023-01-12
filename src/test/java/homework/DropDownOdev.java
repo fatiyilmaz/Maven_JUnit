@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
 import org.openqa.selenium.support.ui.Select;
 import utilities.TestBase;
 
@@ -34,6 +35,8 @@ public class DropDownOdev extends TestBase {
         Assert.assertNotEquals(40,toplamOptions);
 
     }
+    static String ikinciUrunTitle;
+    static String ikinciUrunPrice;
 
     @Test
     public void Test02() {
@@ -62,27 +65,66 @@ public class DropDownOdev extends TestBase {
         ikinciUrun.click();
 
         //ürünün title'ni ve fiyatını variable’a  assign edip ürünü sepete ekleyelim
-        String actualTitle = driver.findElement(By.xpath("(//*[@id='productTitle'])[1]")).getText();
-        String fiyat = driver.findElement(By.cssSelector("div[class='a-section a-spacing-none aok-align-center']")).getText();
+        String ikinciUrunTitle = driver.findElement(By.xpath("(//*[@id='productTitle'])[1]")).getText();
+        String ikinciUrunPrice = driver.findElement(By.cssSelector("div[class='a-section a-spacing-none aok-align-center']")).getText();
         driver.findElement(By.id("add-to-cart-button")).click();
+
+    }
+
+
+    @Test
+    public void test03() {
+        //Test03
+        //yeni bir sekme açarak amazon anasayfaya gidin
+        driver.switchTo().newWindow(WindowType.TAB);
+        driver.get("https://www.amazon.com");
+
+        //dropdown’dan bebek bölümüne secin
+        WebElement dropDownMenu = driver.findElement(By.xpath("//*[@id='searchDropdownBox']"));
+        Select select = new Select(dropDownMenu);
+        select.selectByVisibleText("Baby");
+
+        //bebek puset aratıp bulunan sonuç sayısını yazdırın
+        driver.findElement(By.id("twotabsearchtextbox")).sendKeys("bebek puset", Keys.ENTER);
+        String[] result = driver.findElement(By.xpath("//*[text()='1-16 of 22 results for']")).getText().split(" ");
+        System.out.println("Sonuc Sayisi = "+result[2]);
+
+
+        //sonuç yazsının puset içerdiğini test edin
+        String actualResult = driver.findElement(By.xpath("(//*[@class='a-section a-spacing-small a-spacing-top-small'])[1]")).getText();
+        String expectedResult = "puset";
+        Assert.assertTrue(actualResult.contains(expectedResult));
+
+
+        //5-üçüncü ürüne relative locater kullanarak tıklayin
+        WebElement ikinciUrun = driver.findElement(By.xpath("(//*[@class='s-image'])[2]"));
+        WebElement ucuncuUrun = driver.findElement(with(By.xpath("(//*[@class='s-image'])[3]")).below(ikinciUrun));
+        ucuncuUrun.click();
+
+
+
+        //6-title ve fiyat bilgilerini assign edelim ve ürünü sepete ekleyin  Test 4
+        String ucuncuUrunTitle = driver.findElement(By.xpath("(//*[@id='productTitle'])[1]")).getText();
+        String ucuncuUrunPrice = driver.findElement(By.xpath("//span[@class='a-offscreen']")).getText();
+        WebElement sepeteUrunEkle = driver.findElement(By.xpath("//*[@id='add-to-cart-button']"));
+        sepeteUrunEkle.click();
+
+
+        //1-sepetteki ürünlerle eklediğimiz ürünlerin aynı olduğunu isim ve fiyat olarak doğrulayın
+//        WebElement sepeteUrunEkle = driver.findElement(By.xpath("//*[@id='add-to-cart-button']"));
+//        sepeteUrunEkle.click();
+//        WebElement sepeteGit = driver.findElement(By.xpath("//*[@href='/gp/cart/view.html?ref_=sw_gtc']"));
+//        sepeteGit.click();
+//
+//        String urunIsim= driver.findElement(By.xpath("//span[@class='a-truncate-full']")).getText();
+//        String urunFiyat = driver.findElement(By.xpath("//*[@class='a-size-medium a-color-base sc-price sc-white-space-nowrap sc-product-price a-text-bold']")).getText();
+
+        Assert.assertNotEquals(ikinciUrunTitle,ucuncuUrunTitle);
+        Assert.assertNotEquals(ikinciUrunPrice,ucuncuUrunPrice);
 
 
 
 
 
     }
-
-
-
-        //Test03
-        //yeni bir sekme açarak amazon anasayfaya gidin
-        //dropdown’dan bebek bölümüne secin
-        //bebek puset aratıp bulundan sonuç sayısını yazdırın
-        //sonuç yazsının puset içerdiğini test edin
-        //5-üçüncü ürüne relative locater kullanarak tıklayin
-        //6-title ve fiyat bilgilerini assign edelim ve ürünü sepete ekleyin  Test 4
-        //1-sepetteki ürünlerle eklediğimiz ürünlerin aynı olduğunu isim ve fiyat olarak doğrulayın
-
-
-
 }

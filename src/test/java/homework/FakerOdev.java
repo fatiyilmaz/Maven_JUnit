@@ -1,9 +1,11 @@
 package homework;
 
 import com.github.javafaker.Faker;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import utilities.TestBase;
 
 
@@ -30,21 +32,29 @@ public class FakerOdev extends TestBase {
 
 
 //"firstName" giris kutusuna bir isim yazin
-        Faker faker = new Faker();
-        driver.findElement(By.xpath("(//[@type='text'])[2]")).sendKeys(faker.name().firstName()
-                , Keys.TAB,faker.name().lastName(),Keys.TAB,faker.internet().emailAddress()
-                ,Keys.TAB,faker.random().toString(),Keys.TAB,faker.date().birthday().toString());
-
-
-//"surname" giris kutusuna bir soyisim yazin
+// "surname" giris kutusuna bir soyisim yazin
 //"email" giris kutusuna bir email yazin
 //"email" onay kutusuna emaili tekrar yazin
 //Bir sifre girin
 //Tarih icin gun secin
 //Tarih icin ay secin
 //Tarih icin yil secin
+        Faker faker = new Faker();
+        driver.findElement(By.xpath("(//*[@type='text'])[2]")).sendKeys(faker.name().firstName()
+                , Keys.TAB,faker.name().lastName(),Keys.TAB,faker.internet().emailAddress()
+                ,Keys.TAB,faker.number().digits(9),Keys.TAB,Keys.TAB,"30",Keys.TAB,"Mart",Keys.TAB,"2022");
+
 //Cinsiyeti secin
+        WebElement erkek = driver.findElement(By.xpath("//input[@value='2']"));
+        waitFor(3);
+        erkek.click();
+
+        WebElement kadin = driver.findElement(By.xpath("//input[@value='1']"));
 //Isaretlediginiz cinsiyetin secili, diger cinsiyet kutusunun secili olmadigini test edin.
+        Assert.assertTrue(erkek.isSelected());
+        Assert.assertFalse(kadin.isSelected());
+
+
 //Sayfayi kapatin
 
 

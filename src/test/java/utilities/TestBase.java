@@ -15,7 +15,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TestBase {
+public abstract class TestBase {//Reusable methodlarin oldugu bolum.
+
     //TestBase'i abstract yapmamizin sebebi bu sinifin objesini olusturmak istemiyorum,
     //TestBase testBase = new TestBase(); bu objeyi yapmak istemiyorum.
     //Benim istegim bu sinifi extend etmek ve icindeki hazir methodlari kullanmak.
