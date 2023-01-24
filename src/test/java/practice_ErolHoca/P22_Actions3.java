@@ -1,5 +1,6 @@
 package practice_ErolHoca;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -14,19 +15,24 @@ public class P22_Actions3 extends TestBase {
 
     @Test
     public void name() {
+        //-https://jqueryui.com/slider/#colorpicker adrese gidiniz
         driver.get("https://jqueryui.com/slider/#colorpicker");
-        WebElement iframe = driver.findElement(By.xpath("//iframe"));
+        WebElement iframe = driver.findElement(By.xpath("//*[@class='demo-frame']"));
         driver.switchTo().frame(iframe);
 
-        WebElement kutu2 = driver.findElement(By.xpath("//*[@style='left: 100;']"));
-        Actions actions2 = new Actions(driver);
-        WebElement kirmizi = driver.findElement(By.xpath("//*[@style='left: 0%;']"));
-        actions2.clickAndHold(kutu2).dragAndDrop(kutu2,kirmizi).build().perform();
+        //-Kutucuk içindeki rengi önce kırmızı sonra sarı yapınız
+        WebElement yesilTus = driver.findElement(By.xpath("(//*[@class='ui-slider-handle ui-corner-all ui-state-default'])[2]"));
+        WebElement maviTus = driver.findElement(By.xpath("(//*[@class='ui-slider-handle ui-corner-all ui-state-default'])[3]"));
+        Actions actions = new Actions(driver);
 
-        WebElement kutu = driver.findElement(By.xpath("//*[@style='left: 54.902%;']"));
-        WebElement sari = driver.findElement(By.xpath("//*[@style='left: 100%;']"));
-        //WebElement kirmizi = driver.findElement(By.xpath("(//span[@tabindex='0'])[2]"));
-        actions2.clickAndHold(kutu).dragAndDrop(kutu,sari).build().perform();
+        actions.dragAndDropBy(yesilTus,-175,0);//Genellikle slider' lar için bu method kullanılır
+        actions.dragAndDropBy(maviTus,-80,0);
+        actions.dragAndDropBy(yesilTus,301,0).release().build().perform();
+
+        //-Sarı olduğunu test edelim
+        WebElement sari = driver.findElement(By.xpath("//*[@style='background-color: rgb(255, 255, 0);']"));
+        Assert.assertTrue(sari.isDisplayed());
+        //assert sari.isDisplayed();
 
 
     }

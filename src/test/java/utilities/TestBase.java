@@ -215,8 +215,64 @@ public abstract class TestBase {//Reusable methodlarin oldugu bolum.
         String currentTime = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
         String path = System.getProperty("user.dir")+"/test-output/Screenshots/"+currentTime+"image.png";
         FileUtils.copyFile(image,new File(path));
+    }
 
 
+
+    //SCROLLINTOVIEWJS
+    //@parametremiz: WebElement kaydirir
+    //Yaptigi is: Verilen WebElementin uzerine kaydirir
+    public void scrollIntoViewJS(WebElement element){
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript("arguments[0].scrollIntoView(true);",element);
+
+    }
+
+
+    //SAYFANIN EN ALTINA IN
+    //Bu method ile sayfanin en altina inebiliriz
+    public void scrollEndJS(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0,document.body.scrollHeight)");//0 sabit kalacak (x) height sayfa uzunlugu en asagi inecek (y) koordinatlari diye dusunulebilir.
+    }
+
+
+    //Bu method ile sayfanin en ustune cikabiliriz
+    public void scrollTopJS(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0,-document.body.scrollHeight)");//Bu method ile sayfanin en ustune cikabiliriz.
+    }
+
+
+    //Bu method ile belirli bir elemente JS Executor ile tiklanabilir
+    public void clickByJS(WebElement element){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();",element);
+    }
+
+
+    //sendKeys islevi gorur, yazdirma yapar.
+    //sendKeys oncelikli tercihimizdir.
+    public void typeWithJS(WebElement element, String metin){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('value','"+metin+"')",element);//concat yapiyorum benim yazdigimi yazdirsin diye.
+    }
+
+
+    //    input elementindeki degerleri(value) al
+//   Belirli bir WebElement'in id değerini String olarak alır ve value attribute değerini String olarak döndürür
+//    return
+//    document HTML'E GIT
+//    .getElementById('" + idOfElement + "') ID'si VERILEN ELEMENTI BUL
+//    .value")
+//    .toString();
+    public void getValueByJS(String idOfElement) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String text = js.executeScript("return document.getElementById('" + idOfElement + "').value").toString();
+        System.out.println("Kutudaki value: " + text);
+        //        NOT: document.querySelector("p").value; -> TAG KULLANILABILIR
+//             document.querySelector(".example").value; -> CSS DEGERI KULLANILABILIR
+//             document.querySelector("#example").value; -> CSS DEGERI KULLANILABILIR
     }
 }
 
