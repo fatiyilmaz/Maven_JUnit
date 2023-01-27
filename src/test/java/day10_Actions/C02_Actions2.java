@@ -40,8 +40,5 @@ public class C02_Actions2 extends TestBase {
         //Acilan sayfanin Title in “Your Account” icerdigini dogrula
         Assert.assertTrue(driver.getTitle().contains("Your Account"));
 
-
     }
-
-
 }

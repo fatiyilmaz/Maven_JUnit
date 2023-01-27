@@ -24,7 +24,6 @@ public class P29_StaleElementReferanceException extends TestBase {
             urunler = driver.findElements(By.partialLinkText("Apple iPhone"));//STALE_ELEMENT_REFERANCE_EXCEPTION: attigi icin locate'ini tekrar hatirlattik ve handle ettik.
             urunler.get(i).click();
             driver.navigate().back();
-
         }
         //StaleElementReferanceException hatasini handle etmek icin loop icine webelementlerden olusturdugumuz list'i koymaliyiz.
 
